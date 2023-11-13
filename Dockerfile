@@ -19,4 +19,4 @@ ENV AWS_DEFAULT_REGION=us-east-1
 
 EXPOSE 8000
 
-CMD ["gunicorn", "-w 2", "-b 0.0.0.0:8000", "server:connex_app", "--log-config", "gunicorn-logging.conf", "--timeout", "300"]
+CMD ["gunicorn", "-w 2", "-b 0.0.0.0:8000", "app:app", "--log-config", "gunicorn-logging.conf", "--timeout", "300"]
