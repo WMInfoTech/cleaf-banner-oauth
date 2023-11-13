@@ -6,7 +6,7 @@ class Config():
     db_password = os.getenv('DB_PASSWORD')
     db_dsn = os.getenv('DB_DSN')
     cl_redirect_url = os.getenv('CL_REDIRECT_URL')
-    ttl_minutes = int(os.getenv('CL_TTL_SECONDS'))
+    ttl_seconds = int(os.getenv('CL_TTL_SECONDS'))
     published_version = os.getenv('PUBLISHED_VERSION')
 
 

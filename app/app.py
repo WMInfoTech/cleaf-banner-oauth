@@ -33,7 +33,7 @@ def index():
     row = cursor.fetchone()
     lv_pidm = row[0]
     lv_token = base64.b64encode(str(uuid.uuid4()).encode("UTF-8")).decode("UTF-8")
-    lv_expiration_date = datetime.datetime.now() + datetime.timedelta(seconds=config.ttl_minutes)
+    lv_expiration_date = datetime.datetime.now() + datetime.timedelta(seconds=config.ttl_seconds)
 
     cursor.execute("""INSERT INTO CLEAF.cl_access_token
         (ct_pidm
