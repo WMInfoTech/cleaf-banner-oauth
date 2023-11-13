@@ -10,12 +10,13 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 COPY --chown=app:app /app /app
 
+ENV TZ=America/New_York
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+
 USER app
 
 ARG PUBLISHED_VERSION=NOBUILD-INFO
 ENV PUBLISHED_VERSION=$PUBLISHED_VERSION
-
-ENV AWS_DEFAULT_REGION=us-east-1
 
 EXPOSE 8000
 
