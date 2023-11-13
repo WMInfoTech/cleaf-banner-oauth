@@ -58,3 +58,7 @@ def ping():
     published_version = {"PUBLISHED_VERSION": config.published_version}
     return jsonify({"status": 200, "message": published_version}), 200
 
+@app.route("/version/", methods=('GET',))
+def version():
+    published_version = {"PUBLISHED_VERSION": config.published_version}
+    return jsonify({"status": 200, "message": published_version}), 200
