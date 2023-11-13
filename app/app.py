@@ -53,12 +53,7 @@ def index():
 
     return redirect("{}?code={}".format(config.cl_redirect_url, lv_token))
 
-@app.route("/ping/", methods=('GET',))
+@app.route("/healthcheck/ping/", methods=('GET',))
 def ping():
-    published_version = {"PUBLISHED_VERSION": config.published_version}
-    return jsonify({"status": 200, "message": published_version}), 200
-
-@app.route("/version/", methods=('GET',))
-def version():
     published_version = {"PUBLISHED_VERSION": config.published_version}
     return jsonify({"status": 200, "message": published_version}), 200
