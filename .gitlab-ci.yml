@@ -1,0 +1,6 @@
+variables:
+  DOCKER_BUILD_EXTRA_ARGS: --build-arg "PUBLISHED_VERSION=latest-${CI_COMMIT_REF_NAME}-${CI_COMMIT_SHORT_SHA}"
+
+include:
+- project: 'it/shared-ci'
+  file: 'docker/default-build.yaml'

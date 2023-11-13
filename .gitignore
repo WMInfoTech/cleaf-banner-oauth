@@ -1,0 +1,10 @@
+venv/*
+.idea/*
+*.pyc
+testpost.py
+app/*.pyc
+token_generator.py
+testparse.py
+app/__pycache__/app.cpython-38.pyc
+tests/*
+run/*
