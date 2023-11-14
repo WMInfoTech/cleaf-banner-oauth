@@ -8,6 +8,7 @@ class Config():
     cl_redirect_url = os.getenv('CL_REDIRECT_URL')
     ttl_seconds = int(os.getenv('CL_TTL_SECONDS'))
     published_version = os.getenv('PUBLISHED_VERSION')
+    students_only = str(os.getenv('STUDENTS_ONLY', 'false')).lower() == 'true'
 
 
     if os.path.isfile(db_password):

@@ -126,13 +126,15 @@ def validate(ticket):
         username = xml_from_dict["cas:user"]
         attributes = xml_from_dict.get("cas:attributes", {})
 
-        if attributes and "cas:memberOf" in attributes:
-            if isinstance(attributes["cas:memberOf"], str):
-                attributes["cas:memberOf"] = attributes["cas:memberOf"].lstrip('[').rstrip(']').split(',')
-                for group_number in range(0, len(attributes['cas:memberOf'])):
-                    attributes['cas:memberOf'][group_number] = attributes['cas:memberOf'][group_number].lstrip(' ').rstrip(' ')
+        # if attributes and "cas:memberOf" in attributes:
+        #     if isinstance(attributes["cas:memberOf"], str):
+        #         attributes["cas:memberOf"] = attributes["cas:memberOf"].lstrip('[').rstrip(']').split(',')
+        #         for group_number in range(0, len(attributes['cas:memberOf'])):
+        #             attributes['cas:memberOf'][group_number] = attributes['cas:memberOf'][group_number].lstrip(' ').rstrip(' ')
         flask.session[cas_username_session_key] = username
-        # flask.session[cas_attributes_session_key] = attributes
+        flask.session[cas_attributes_session_key] = {'cas:eduPersonAffiliation': attributes['cas:eduPersonAffiliation']
+            , 'cas:wmEduSpridenID': attributes['cas:wmEduSpridenID']
+            , 'cas:UDC_IDENTIFIER': attributes['cas:UDC_IDENTIFIER']}
     else:
         current_app.logger.debug("invalid")
 

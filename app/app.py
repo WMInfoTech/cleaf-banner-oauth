@@ -12,7 +12,8 @@ from config import Config
 app = Flask(__name__)
 app.config.from_object(Config)
 app.wsgi_app = ProxyFix(app.wsgi_app, x_proto=1)
-app.config['SESSION_COOKIE_NAME'] = 'wm_banner_login'
+app.config['SESSION_COOKIE_NAME'] = 'wm_path_login'
+app.config['CAS_ATTRIBUTES_SESSION_KEY'] = 'WM_SSO_ATTRS'
 cas = CAS(app)
 
 config = Config()
@@ -26,10 +27,12 @@ def getpool():
 @app.route("/", methods=('GET',))
 @login_required
 def index():
+    if 'student' not in cas.attributes['cas:eduPersonAffiliation'] and config.students_only is True:
+        return jsonify({"status": 404, "message": "Students only"}), 404
     pool = getpool()
     connection = pool.acquire()
     cursor = connection.cursor()
-    cursor.execute("SELECT goradid_pidm FROM goradid WHERE goradid_adid_code = 'WMID' AND goradid_additional_id = :username", {'username': cas.username})
+    cursor.execute("SELECT gobumap_pidm FROM gobumap WHERE gobumap_udc_id = :gobumap_udc_id", {'gobumap_udc_id': cas.attributes["cas:UDC_IDENTIFIER"]})
     row = cursor.fetchone()
     lv_pidm = row[0]
     lv_token = base64.b64encode(str(uuid.uuid4()).encode("UTF-8")).decode("UTF-8")
