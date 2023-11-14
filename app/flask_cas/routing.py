@@ -133,7 +133,6 @@ def validate(ticket):
         #             attributes['cas:memberOf'][group_number] = attributes['cas:memberOf'][group_number].lstrip(' ').rstrip(' ')
         flask.session[cas_username_session_key] = username
         flask.session[cas_attributes_session_key] = {'cas:eduPersonAffiliation': attributes['cas:eduPersonAffiliation']
-            , 'cas:wmEduSpridenID': attributes['cas:wmEduSpridenID']
             , 'cas:UDC_IDENTIFIER': attributes['cas:UDC_IDENTIFIER']}
     else:
         current_app.logger.debug("invalid")
