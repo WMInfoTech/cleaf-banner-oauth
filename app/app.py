@@ -36,6 +36,7 @@ def index():
     row = cursor.fetchone()
     lv_pidm = row[0]
     lv_token = base64.b64encode(str(uuid.uuid4()).encode("UTF-8")).decode("UTF-8")
+    lv_code = base64.b64encode(str(uuid.uuid4()).encode("UTF-8")).decode("UTF-8")
     lv_expiration_date = datetime.datetime.now() + datetime.timedelta(seconds=config.ttl_seconds)
 
     cursor.execute("""INSERT INTO CLEAF.cl_access_token
@@ -48,13 +49,13 @@ def index():
     VALUES
         (:lv_pidm
         ,:lv_token
-        ,null
+        ,:lv_code
         ,:lv_expire_date
         ,SYSDATE
-        ,null)""", {"lv_pidm": lv_pidm, "lv_token": lv_token, "lv_expire_date": lv_expiration_date})
+        ,null)""", {"lv_pidm": lv_pidm, "lv_token": lv_token, "lv_code": lv_code, "lv_expire_date": lv_expiration_date})
     connection.commit()
 
-    return redirect("{}?code={}".format(config.cl_redirect_url, lv_token))
+    return redirect("{}?code={}".format(config.cl_redirect_url, lv_code))
 
 @app.route("/healthcheck/ping/", methods=('GET',))
 def ping():
